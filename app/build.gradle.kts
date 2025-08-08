@@ -39,7 +39,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "cl.hcslearning.cxf.rest.App"
 }
 
 tasks.named<Test>("test") {
