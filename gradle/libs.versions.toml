@@ -1,16 +1,19 @@
-
 [versions]
 junit-jupiter = "5.11.3"
 cxf           = "4.1.3"
 logback       = "1.5.18"
+yasson        = "3.0.4"
 jax-rs        = "3.1.0"
 
 [libraries]
 junit-jupiter      = { module = "org.junit.jupiter:junit-jupiter",             version.ref = "junit-jupiter" }
 apache-cxf-core    = { module = "org.apache.cxf:cxf-core",                     version.ref = "cxf" }
 apache-cxf-jaxrs   = { module = "org.apache.cxf:cxf-rt-frontend-jaxrs",        version.ref = "cxf"}
+apache-cxf-rs-ext  = { module = "org.apache.cxf:cxf-rt-rs-extension-providers",version.ref = "cxf" }
+eclipse-yasson     = { module = "org.eclipse:yasson",                          version.ref = "yasson" }
 apache-cxf-http    = { module = "org.apache.cxf:cxf-rt-transports-http",       version.ref = "cxf"}
 apache-cxf-jetty   = { module = "org.apache.cxf:cxf-rt-transports-http-jetty", version.ref = "cxf"}
 apache-cxf-logging = { module = "org.apache.cxf:cxf-rt-features-logging",      version.ref = "cxf"}
 logback-core       = { module = "ch.qos.logback:logback-core",                 version.ref = "logback" }
 logback-classic    = { module = "ch.qos.logback:logback-classic",              version.ref = "logback" }
+

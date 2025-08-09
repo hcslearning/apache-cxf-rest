@@ -19,10 +19,12 @@ dependencies {
     // Use JUnit Jupiter for testing.
     //testImplementation(libs.junit.jupiter)
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    //testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation(libs.apache.cxf.core)
     implementation(libs.apache.cxf.jaxrs)
+    implementation(libs.apache.cxf.rs.ext)
+    implementation(libs.eclipse.yasson)
     implementation(libs.apache.cxf.http)
     implementation(libs.apache.cxf.jetty)
     implementation(libs.apache.cxf.logging)
