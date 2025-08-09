@@ -1,37 +1,51 @@
-# Apache CXF Rest
+# Apache CXF REST - Ejemplo Básico
 
-Proyecto básico de ejemplo de Jakarta RESTful Web Services 3.1 usando Apache CXF. 
+Este es un proyecto de ejemplo que demuestra cómo crear servicios RESTful utilizando **Jakarta RESTful Web Services 3.1** junto con **Apache CXF 4.1.3**. El proyecto está desarrollado con **Java 21** y se construye y ejecuta con **Gradle**.
 
-## Tecnologías 
+---
 
-- Java 21
-- Apache CXF 4.1.3
-- Jakarta RESTful Web Services 3.1
-- Gradle 
+## Tecnologías utilizadas
 
-## Ejecución
+- **Java 21**
+- **Apache CXF 4.1.3**
+- **Jakarta RESTful Web Services 3.1**
+- **Gradle** (para construcción y ejecución)
 
-Para iniciar el proyecto:
+---
+
+## Cómo ejecutar el proyecto
+
+Para iniciar el servidor REST localmente, ejecuta el siguiente comando en la raíz del proyecto:
 
 ```bash
-./gradlew run 
+./gradlew run
 ```
 
-## Pruebas 
+## Pruebas con curl 
 
-### Recupera todos los productos
-```
+A continuación se muestran ejemplos para probar los principales endpoints del API usando `curl`.
+
+### 1. Obtener todos los productos
+
+Recupera la lista completa de productos registrados.
+
+```bash
 curl -i -X GET http://localhost:9000/api/producto
 ```
 
-### Recupera un producto por ID
-```
+### 2. Obtener un producto por ID
+
+Recupera un producto específico usando su identificador.
+
+```bash
 curl -i -X GET http://localhost:9000/api/producto/2
 ```
 
-### Agrega un producto nuevo
+### 3. Agregar un nuevo producto
 
-```
+Crea un nuevo producto enviando los datos en formato JSON.
+
+```bash
 curl -i -X POST http://localhost:9000/api/producto \
   -H "Content-Type: application/json" \
   -d '{
@@ -39,12 +53,13 @@ curl -i -X POST http://localhost:9000/api/producto \
         "nombre": "Cinturón de cuero",
         "precio": 12990
       }'
-
 ```
 
-### Edita un producto
+### 4. Modificar un producto existente
 
-```
+Actualiza los datos de un producto identificado por su ID.
+
+```bash
 curl -i -X PUT http://localhost:9000/api/producto/4 \
   -H "Content-Type: application/json" \
   -d '{
@@ -54,15 +69,19 @@ curl -i -X PUT http://localhost:9000/api/producto/4 \
       }'
 ```
 
-### Elimina un producto
+### 5. Eliminar un producto
 
-```
+Elimina un producto especificando su ID.
+
+```bash
 curl -i -X DELETE http://localhost:9000/api/producto/4
 ```
 
 ## Explicación Proyecto
 
-### Dependencias
+### Dependencias principales
+
+El proyecto utiliza las siguientes dependencias para construir y ejecutar el servicio REST con Apache CXF:
 
 ```
 [versions]
@@ -83,16 +102,26 @@ logback-core       = { module = "ch.qos.logback:logback-core",                 v
 logback-classic    = { module = "ch.qos.logback:logback-classic",              version.ref = "logback" }
 ```
 
-- **CXF Core**: El núcleo del proyecto CXF, sin él no se podría hacer nada. 
-- **CXF JAX-RS Frontend**: Este artefacto provee el soporte para la construcción y despliegue de servicios web de tipo REST sobre Apache CXF.
-- **CXF Extension Providers**: Es un adaptador de CXF que permite la detección de implementaciones externas en el flujo de JAX-RS. 
-- **Yasson**: Implementación de referencia de la especificación Jakarta JSON Binding creada por la fundación Eclipse. 
-- **Transport HTTP Jetty**: Implementación de HTTP de CXF usando el servidor Jetty. 
-- **Logback**: Es una librería de Logging que se integra sin problemas con SL4J. 
+### ¿Qué hace cada dependencia?
+
+- **CXF Core**: El componente central de Apache CXF. Proporciona la base para construir servicios web, tanto SOAP como REST. Sin esta dependencia, no se puede usar CXF.
+
+- **CXF JAX-RS Frontend**: Añade soporte para construir servicios RESTful (JAX-RS) usando Apache CXF. Maneja la transformación de recursos Java en endpoints HTTP REST.
+
+- **CXF Extension Providers**: Permite a Apache CXF detectar y utilizar implementaciones externas de proveedores en el flujo de JAX-RS, mejorando la compatibilidad con distintas tecnologías y formatos.
+
+- **Yasson**: Es la implementación oficial de Eclipse para Jakarta JSON Binding (JSON-B). Se encarga de convertir automáticamente objetos Java a JSON y viceversa.
+
+- **Transport HTTP Jetty**: Proporciona un servidor HTTP embebido basado en Jetty para ejecutar el servicio REST sin necesidad de un servidor externo.
+
+- **Logback (Core y Classic)**: Librería de logging moderna y potente, compatible con SLF4J. Se utiliza para registrar eventos, errores e información durante la ejecución de la aplicación.
+
+- **CXF Logging Feature**: Agrega funcionalidades para registrar las peticiones y respuestas HTTP, útil para depuración y monitoreo.
+
 
 ### Código
 
-Proyecto hace uso de clase SeBootstrap para su ejecución, esta clase es parte del estándar de Jakarta RESTful Web Services. Se utiliza Apache CXF como implementación de la especificación. En este proyecto se agrega artefacto **_cxf-rt-transports-http-jetty_** para que Jetty funcione como el servidor web. 
+Este proyecto utiliza la clase `SeBootstrap` para iniciar el servicio REST, que forma parte del estándar **Jakarta RESTful Web Services**. Apache CXF es la implementación utilizada para dicha especificación. Además, se incluye el artefacto **`cxf-rt-transports-http-jetty`** para que el servidor Jetty actúe como servidor HTTP embebido.
 
 ```java
 private static void jakartaRsWsStart() {
@@ -113,7 +142,7 @@ private static void jakartaRsWsStart() {
 }
 ```
 
-Luego, la clase MiAPI extiende de Application, permite configurar el path raíz, además permite especificar las clases configuradas como recurso para los servicios web REST. 
+La clase MiAPI extiende de Application, lo que permite configurar el path raíz para el API REST y registrar las clases que exponen los recursos (endpoints) del servicio.
 
 ```java
 @ApplicationPath("/api")
@@ -128,7 +157,7 @@ public class MiAPI extends Application {
 }
 ```
 
-Finalmente, el la clase de ejemplo con el recurso Producto.
+Finalmente, la clase ProductoService define el recurso REST para manejar productos. Usa las anotaciones JAX-RS para definir los endpoints, los métodos HTTP, y los formatos JSON para entrada y salida.
 
 ```java
 @Path("/producto")
