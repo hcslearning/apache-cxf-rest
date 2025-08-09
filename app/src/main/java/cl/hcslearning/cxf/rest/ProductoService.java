@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Path("/producto")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProductoService {
 
     private static final List<Producto> productos = new ArrayList<>( List.of(
@@ -57,7 +58,6 @@ public class ProductoService {
         return existente;
     }
 
-    // Eliminar un producto
     @DELETE
     @Path("/{id}")
     public Response deleteProducto(@PathParam("id") long id) {

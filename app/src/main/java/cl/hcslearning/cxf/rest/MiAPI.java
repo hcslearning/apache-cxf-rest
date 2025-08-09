@@ -13,7 +13,6 @@ public class MiAPI extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> clases = new HashSet<>();
         clases.add( ProductoService.class );
-
         return clases;
     }
 }
